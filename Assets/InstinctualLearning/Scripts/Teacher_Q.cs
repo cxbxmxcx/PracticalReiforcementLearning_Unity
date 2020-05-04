@@ -20,7 +20,7 @@ namespace IL.Simulation
             if (student.Q.ContainsKey(state) && student.Q[state].ContainsKey(action))
             {
                 var predict = student.Q[state][action];
-                var target = reward + student.gamma * student.Q[state2].Max(a => a.Value); //[action2];
+                var target = reward + student.gamma * student.Q[state2].Max(a => a.Value); 
                 var q = student.Q[state][action] + student.alpha * (target - predict);
                 action.value = q;
                 student.Q[state][action] = q;

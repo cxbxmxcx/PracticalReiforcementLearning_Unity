@@ -4,10 +4,24 @@ using UnityEngine;
 
 namespace IL.Simulation
 {
+    [RequireComponent(typeof(MeshRenderer))]
     public class SelfOrganizingState : AIState
     {        
         public List<AIState> connectedStates;       
         public float detectRadius;
+        public MeshRenderer mesh;
+
+        private void Start()
+        {
+            mesh = GetComponent<MeshRenderer>();
+        }
+
+        public override void SetMaterial(Material mat)
+        {
+            if (mesh == null || mat == null) return;
+
+            mesh.material = mat;
+        }
 
         //initialize the state of the object
         private void Awake()

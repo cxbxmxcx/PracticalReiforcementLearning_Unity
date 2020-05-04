@@ -7,7 +7,7 @@ namespace IL.Simulation
 {
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Animator))]
-    public class StudentAgent : AIAgent
+    public class MasterAgent : AIAgent
     {
         [Header("Should this agent always act greedily, best action?")]
         public bool actGreedy;

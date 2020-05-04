@@ -11,6 +11,12 @@ namespace IL.Simulation
         public List<AIAction> actions;       
         public float reward;
         public bool resetAgent;
+
+        //used to set the states visible material
+        public virtual void SetMaterial(Material mat)
+        {
+            
+        }
                         
         public override int GetHashCode()
         {

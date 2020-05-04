@@ -9,44 +9,20 @@ namespace IL.Simulation
     {
         public AIState startState;
         public AIState[] states;
-
+          
         // Start is called before the first frame update
         void Start()
-        {
-            //if (masterBrain == null)
-            //{
-            //    Debug.LogError("No master brain set on AIManager");
-            //    return;
-            //}
-            states = GetComponentsInChildren<AIState>();
-            
+        {            
+            states = GetComponentsInChildren<AIState>(); 
         }
-
-        // Update is called once per frame
-        //void Update()
-        //{
-        //    if(agentRunning == false && agent == null)
-        //    {
-        //        CreateAgent();
-        //    }
-        //}
-
-        public void ResetAgent(StudentAgent agent)
+        
+        public void ResetAgent(AIAgent agent)
         {            
             //agentRunning = false;
             agent.transform.position = startState.transform.position.Copy();
             agent.currentState = startState;
             agent.destination = null;
-            agent.Agent.destination = startState.transform.position.Copy();
-        }
-
-        //private void CreateAgent()
-        //{
-        //    if (agentPrefab == null) Debug.LogError("No agent prefab set on AIManager");
-
-        //    agent = Instantiate<AIAgent>(agentPrefab, transform);
-        //    agent.brain = masterBrain;
-        //    agentRunning = true;
-        //}
+            (agent as StudentAgent)?.Agent.SetDestination(startState.transform.position.Copy());             
+        }        
     }
 }

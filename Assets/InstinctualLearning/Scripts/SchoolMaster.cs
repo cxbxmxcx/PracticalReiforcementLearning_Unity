@@ -6,7 +6,8 @@ namespace IL.Simulation
 {
     public class SchoolMaster : MonoBehaviour
     {
-        public StudentAgent[] students;
+        public AIAgent[] students;
+        public StudentBrain[] brains;
 
         // Start is called before the first frame update
         void Start()

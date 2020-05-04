@@ -107,6 +107,12 @@ namespace IL.Simulation
             }
         }
 
+        public AIAction ActGreedy(AIState state)
+        {
+            if (Q == null || Q.Keys.Count < 1) return null;
+            return Q[state].Aggregate((a1, a2) => a1.Value > a2.Value ? a1 : a2).Key;
+        }
+
         public AIAction Act(AIState state)
         {
             if (Q == null || Q.Keys.Count < 1) return null;
@@ -120,6 +126,46 @@ namespace IL.Simulation
                 var keys = Q[state].Keys.ToList();
                 var r = Random.Range(0, keys.Count);
                 return keys[r];
+            }
+        }
+
+        //normalize all the values in the brain
+        public virtual void NormalizeBrain()
+        {
+            if (Q == null || Q.Keys.Count < 1) return;
+
+            var maxA = float.MinValue;
+            var minA = float.MaxValue;
+            foreach (var state in Q.Keys)
+            {
+                maxA = Mathf.Max(maxA, Q[state].Max(_ => _.Value));
+                minA = Mathf.Min(minA, Q[state].Min(_ => _.Value));
+            }
+
+            var rng = maxA - minA;            
+            foreach (var state in Q.Keys)
+            {
+                var acts = Q[state].Keys.ToList();
+                foreach(var act in acts)
+                {
+                    var val = (Q[state][act] - minA) / rng;
+                    Q[state][act] = val;
+                    act.value = val;
+                }                
+            }
+        }
+
+        public virtual void ResetBrain()
+        {
+            foreach (var state in Q.Keys)
+            {
+                var acts = Q[state].Keys.ToList();
+                foreach (var act in acts)
+                {
+                    var val = 1;
+                    Q[state][act] = val;
+                    act.value = val;
+                }
             }
         }
 
